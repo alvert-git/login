@@ -1,0 +1,25 @@
+.card button{
+    display: flex;
+}
+
+.btnnav{
+    margin-left: 65%;
+}
+.email-icon{
+    position: absolute;
+    padding: 44px;
+    min-width: 40px;
+    margin-left: -125px;
+}
+.password-see-icon{
+    position: absolute;
+    min-width: 40px;
+    margin: -26px;
+    right: 150px;
+}
+.password-notsee-icon{
+    position: absolute;
+    min-width: 40px;
+    margin: -26px;
+    right: 150px;
+}
