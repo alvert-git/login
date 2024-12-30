@@ -38,7 +38,7 @@ const Navbar = (props) => {
         <Link className="nav-link" to="/News">News</Link>
       </li>
       <li className="nav-item">
-                <Link className="nav-link position-relative" to="/profile">
+                <Link className="nav-link position-relative" to="/cartitems">
                   <FaCartShopping />
                   <span className="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-danger">
                     {cart.length}

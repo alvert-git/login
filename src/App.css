@@ -1,3 +1,7 @@
 .heading{
   font-size: larger;
 }
+.three-dots{
+  display: flex;
+  justify-content: space-between;
+}

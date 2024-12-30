@@ -15,6 +15,8 @@ import Userlist from './components/Userlist'
 import User from './components/User'
 import ProductState from "./context/ProductState";
 import News from "./components/News";
+import CartItems from "./components/cartitems";
+import AddProduct from "./components/AddProduct";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -50,6 +52,8 @@ function App() {
       <Route path="/news" element={<News />}/>
       <Route path='/user/:userId/:userName' element={<User/>}/>
       <Route path='/user' element={<Userlist />}/>
+      <Route path="/CartItems" element={<CartItems/>}/>
+      <Route path="/addproduct" element={<AddProduct />}/>
     </Routes>
     
     
