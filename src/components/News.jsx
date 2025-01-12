@@ -6,7 +6,7 @@ import img from '../assets/img2.png'
 const News = () => {
       const context = useContext(productContext);
       const { product ,fetchData, articles} = context;
-      console.log("this is articels", articles);
+    
     
       useEffect(() => {
         fetchData();

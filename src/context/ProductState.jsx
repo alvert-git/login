@@ -1,38 +1,8 @@
-import React, { useReducer, useState } from 'react'
-import productContext from './productContext'
-import { cartReducer } from './Reducer'
+import React, { useReducer, useState } from "react";
+import productContext from "./productContext";
+import { cartReducer } from "./Reducer";
 
 const ProductState = (props) => {
-    // let p1 = {
-    //     name:"apple",
-    //     price:100
-    // }
-    // let update = ()=>{
-    //     setTimeout(()=>{
-    //         setProduct({
-    //             name : "Mango",
-    //             price : 200
-    //         })
-    //     },2000)
-    // }
-    
-    const [articles, setArticles] = useState([]);
-
-  const fetchData = async () => {
-    try {
-      const response = await fetch(
-       "https://newsapi.org/v2/top-headlines?country=us&apiKey=1f50d2f289fc4edbbbd70f2c1ff50f73"
-      );
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      const data = await response.json();
-      setArticles(data.articles);
-      console.log("Fetched data:", data.articles);
-    } catch (error) {
-      console.error("Fetching error:", error);
-    }
-  };
   let products = [
     {
       id: 1,
@@ -64,33 +34,108 @@ const ProductState = (props) => {
     },
   ];
 
-  const [product, setProduct] = useState(products);
-
-  const [state , dispatch] = useReducer(cartReducer,{
-    prodicts: product,
+  const [product, setProduct] = useState([]);
+  const [homeProduct, setHomeProduct] = useState([]);
+  const [state, dispatch] = useReducer(cartReducer, {
+    products: product,
     cart: [],
-});
+  });
 
-const allProduct = async ()=>{
-  const response = await fetch('',{
-    method: "GET",
-    headers: {
-      "Content-Type":"application/json",
-      "auth-token": localStorage.getItem('token')
+  const allProduct = async () => {
+    const response = await fetch(
+      "http://localhost:5000/api/product/getallproduct",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      }
+    );
+    let data = await response.json();
+    console.log(data);
+    setProduct(data);
+  };
+  const allHomeProduct = async () => {
+    const response = await fetch(
+      "http://localhost:5000/api/product/gethomeproduct",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      }
+    );
+    let data = await response.json();
+    console.log(data);
+    setHomeProduct(data);
+  };
+
+  const editProduct = async (selectedProduct, updateData) => {
+    console.log("editing product ", selectedProduct);
+    const { title, description, price, instock } = updateData;
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/product/updateproduct/${selectedProduct}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("token"),
+          },
+          body: JSON.stringify({ title, description, instock, price }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("fail to update");
+      }
+      const json = await response.json();
+      console.log(json);
+      allProduct();
+    } catch (error) {
+      throw new Error("fail to update");
     }
-    
-  })
-let data = await response.json()
-console.log(data);
-setProduct(data)
+  };
 
-  
-}
+  const deleteProduct = async (id) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/product/deleteproduct/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
+      if (response.ok) {
+        console.log("product deleted successfully");
+      } else {
+        console.error("failed to delete the product");
+      }
+      allProduct();
+    } catch (error) {
+      console.error("failed to delete the product");
+    }
+  };
   return (
-    <productContext.Provider value={{ product, articles, fetchData, state, dispatch, allProduct }}>
+    <productContext.Provider
+      value={{
+        product,
+        allProduct,
+        editProduct,
+        deleteProduct,
+        homeProduct,
+        allHomeProduct,
+        state,
+        dispatch,
+      }}
+    >
       {props.children}
     </productContext.Provider>
-  )
-}
+  );
+};
 
-export default ProductState
+export default ProductState;
