@@ -17,6 +17,7 @@ import ProductState from "./context/ProductState";
 import News from "./components/News";
 import CartItems from "./components/cartitems";
 import AddProduct from "./components/AddProduct";
+import Footer from "./components/Footer";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -56,7 +57,7 @@ function App() {
       <Route path="/addproduct" element={<AddProduct />}/>
     </Routes>
     
-    
+    <Footer/>
   
     
     

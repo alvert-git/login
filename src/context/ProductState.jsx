@@ -68,6 +68,7 @@ const ProductState = (props) => {
       }
     );
     let data = await response.json();
+    data.sort((a, b) => new Date(b.date) - new Date(a.date));
     console.log(data);
     setHomeProduct(data);
   };

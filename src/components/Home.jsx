@@ -83,7 +83,7 @@ const Home = () => {
 
 <div className="container mt-4">
         <h5 className="text-center">Featured Products</h5>
-        <div className="row">
+        <div className="row mt-5">
           {homeProduct.slice(0, 4).map((item) => (
             <div className="col-md-3 mb-4" key={item._id}>
               <div className="card">
